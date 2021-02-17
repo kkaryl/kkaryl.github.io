@@ -4,3 +4,5 @@
 # Hugo
 /resources/
 public/
+
+# ./deploy.sh "Your optional commit message"

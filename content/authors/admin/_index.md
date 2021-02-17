@@ -6,7 +6,7 @@ title: Karyl Ong Jia Hui
 superuser: true
 
 # Role/position/tagline
-role: Msc. Artificial Intelligence
+role: MSc. Artificial Intelligence
 
 # Organizations/Affiliations to show in About widget
 organizations:
@@ -14,7 +14,7 @@ organizations:
 #  url: https://www.stanford.edu/
 
 # Short bio (displayed in user profile at end of posts)
-bio: Yet another AI wagon fool.
+bio: dev. ai. 
 
 # Interests to show in About widget
 interests:
@@ -25,10 +25,10 @@ interests:
 # Education to show in About widget
 education:
   courses:
-  - course: MSc in Artificial Intelligence
+  - course: M.Sc. in Artificial Intelligence
     institution: Nanyang Technological University
     year: 2020
-  - course: BEng in Computer Science (Honours)
+  - course: B.Eng. in Computer Science (Honours)
     institution: Nanyang Technological University
     year: 2015
 
@@ -69,11 +69,11 @@ highlight_name: false
 
 Hello there!
 <!-- I'm a developer and yet another AI enthusiast. -->
-I have an inquisitive mind and a great passion towards learning and building software solutions to problems.
+I have an inquisitive mind and enjoy learning and building software solutions to problems.
 
 I'm fascinated by the fact that we are now able to make machines see, read, learn, and make decisions using the knowledge we feed them.
 
-IT is truly a world of boundless creation.
+IT is a world of boundless creation, here's a site to document some of mine.
 
 <!-- From Software Engineering, Infrastructure, Networking, Security, Data Pipelines, Machine Learning to Deep Learning,  -->
 
