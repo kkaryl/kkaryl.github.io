@@ -30,3 +30,13 @@ To help us develop this template and software sustainably under the MIT license,
 <!--
 [![Analytics](https://ga-beacon.appspot.com/UA-78646709-2/academic-kickstart/readme?pixel)](https://github.com/igrigorik/ga-beacon)
 -->
+
+
+### How to deploy
+<!-- 1. `hugo serve` to run local.
+2. After editing the content, run `hugo` command to build public folder.
+3. `# Enter the public subfolder and push the actual website
+cd public
+git add .
+git commit -m "Update Website"
+git push origin master` -->

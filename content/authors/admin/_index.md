@@ -14,7 +14,7 @@ organizations:
 #  url: https://www.stanford.edu/
 
 # Short bio (displayed in user profile at end of posts)
-bio: dev. ai. 
+bio: dev. ai.
 
 # Interests to show in About widget
 interests:
@@ -69,7 +69,7 @@ highlight_name: false
 
 Hello there!
 <!-- I'm a developer and yet another AI enthusiast. -->
-I have an inquisitive mind and enjoy learning and building software solutions to problems.
+I have an inquisitive mind and I enjoy learning and building software solutions to problems.
 
 I'm fascinated by the fact that we are now able to make machines see, read, learn, and make decisions using the knowledge we feed them.
 
