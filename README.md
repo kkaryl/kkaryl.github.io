@@ -40,3 +40,5 @@ cd public
 git add .
 git commit -m "Update Website"
 git push origin master` -->
+
+<!-- Add custom icon (TODO): https://www.rollagain.net/post/adding-custom-icons-to-the-hugo-academic-theme/ -->

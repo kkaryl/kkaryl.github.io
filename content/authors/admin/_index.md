@@ -52,6 +52,9 @@ social:
 - icon: linkedin
   icon_pack: fab
   link: https://www.linkedin.com/in/ongjiahui
+- icon: google
+  icon_pack: fab
+  link: https://run.qwiklabs.com/public_profiles/384a8a27-a610-4586-bd08-1f875ea3a904
 
 # Link to a PDF of your resume/CV.
 # To use: copy your resume to `static/media/resume.pdf`, enable `ai` icons in `params.toml`,

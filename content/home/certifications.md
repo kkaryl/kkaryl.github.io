@@ -23,22 +23,22 @@ date_format: Jan 2006
 #   Leave other parameters empty if not required.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 item:
-- certificate_url: https://www.coursera.org/account/accomplishments/verify/CSLXGT6XFV3H
+- certificate_url: "https://www.coursera.org/account/accomplishments/specialization/LTNFURD54UEU"
   date_end: ""
-  date_start: "2021-02-17"
+  date_start: "2021-03-17"
   description: ""
-  organization: Coursera
+  organization: Coursera - DeepLearning.AI
   organization_url: https://www.coursera.org
-  title: Build Better Generative Adversarial Networks (GANs)
-  url: ""
-- certificate_url: https://www.coursera.org/account/accomplishments/verify/LN4ZBSWE7QJS
+  title: Generative Adversarial Networks (GANs)
+  url: "https://www.coursera.org/specializations/generative-adversarial-networks-gans"
+- certificate_url: "https://www.coursera.org/account/accomplishments/specialization/NUU9HVKAJSTM"
   date_end: ""
-  date_start: "2021-01-01"
+  date_start: "2021-03-06"
   description: ""
-  organization: Coursera
-  organization_url: https://www.coursera.org
-  title: Build Basic Generative Adversarial Networks (GANs)
-  url: ""
+  organization: The Linux Foundation
+  organization_url: https://www.linuxfoundation.org/
+  title: Open Source Software Development, Linux and Git
+  url: "https://www.coursera.org/specializations/oss-development-linux-git"
 - certificate_url: ""
   date_end: ""
   date_start: "2020-12-01"
@@ -47,11 +47,11 @@ item:
   organization_url: https://www.aisingapore.org/
   title: AI For Industry (AI4I)® Programme
   url: https://www.aisingapore.org/talentdevelopment/ai4i/
-- certificate_url: https://www.coursera.org/account/accomplishments/specialization/JC8TXNYEPYRF
+- certificate_url: "https://www.coursera.org/account/accomplishments/specialization/JC8TXNYEPYRF"
   date_end: ""
   date_start: "2020-05-19"
   description: #5 course specialization by DeepLearning.AI formulated to .
-  organization: Coursera
+  organization: Coursera - DeepLearning.AI
   organization_url: https://www.coursera.org
   title: Deep Learning Specialization
   url: https://www.coursera.org/specializations/deep-learning
