@@ -1,0 +1,1347 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Karyl Ong Jia Hui">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="The goal of this challenge is to build a high performing multi-label classiﬁer to identify the facial attributes in photographs.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://kkaryl.github.io/project/celeba/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#1565c0">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.34fb4128b099c6b9c1ffdb403c53fa17.css">
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+  <link rel="manifest" href="/index.webmanifest">
+  
+
+  <link rel="icon" type="image/png" href="/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_192x192_fill_lanczos_center_3.png">
+
+  <link rel="canonical" href="https://kkaryl.github.io/project/celeba/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Karyl | Homepage">
+  <meta property="og:url" content="https://kkaryl.github.io/project/celeba/">
+  <meta property="og:title" content="CelebA Facial Attribute Recognition Challenge | Karyl | Homepage">
+  <meta property="og:description" content="The goal of this challenge is to build a high performing multi-label classiﬁer to identify the facial attributes in photographs."><meta property="og:image" content="https://kkaryl.github.io/project/celeba/featured.png">
+  <meta property="twitter:image" content="https://kkaryl.github.io/project/celeba/featured.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-10-22T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-02-17T15:48:13&#43;08:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kkaryl.github.io/project/celeba/"
+  },
+  "headline": "CelebA Facial Attribute Recognition Challenge",
+  
+  "image": [
+    "https://kkaryl.github.io/project/celeba/featured.png"
+  ],
+  
+  "datePublished": "2020-10-22T00:00:00Z",
+  "dateModified": "2021-02-17T15:48:13+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Karyl Ong Jia Hui"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Karyl | Homepage",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kkaryl.github.io/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "The goal of this challenge is to build a high performing multi-label classiﬁer to identify the facial attributes in photographs."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>CelebA Facial Attribute Recognition Challenge | Karyl | Homepage</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.cbbd96bcb05c8aeb233b6e67999f793a.js"></script>
+
+  
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Karyl | Homepage</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Karyl | Homepage</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#experience"><span>Experience</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#certifications"><span>Certifications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#skills"><span>Skills</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article article-project">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1>CelebA Facial Attribute Recognition Challenge</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Feb 17, 2021
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+<a class="btn btn-outline-primary btn-page-header" href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/tree/master/project_1/Jia%20Hui_Ong_project1.pdf" target="_blank" rel="noopener">
+  PDF
+</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary btn-page-header" href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/tree/master/project_1" target="_blank" rel="noopener">
+    <i class="fab fa-github mr-1"></i>
+    Source Code
+  </a>
+
+
+</div>
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 484px; max-height: 391px;">
+  <div style="position: relative">
+    <img src="/project/celeba/featured.png" alt="" class="featured-image">
+    <span class="article-header-caption">Sample of test image and identified attributes</span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="foreword">Foreword</h2>
+<p>This was a memorable project for me as I had the opportunity to seek and try out numerous advanced machine learning techniques to improve my classification model.</p>
+<p>My final model was designed to use pre-trained ImageNet <strong>MobileNetV2</strong> weights with 40 multi-head binary classifiers. To account for the dataset imbalance issue, <strong>MixUp</strong> training was performed and the <strong>Focal loss</strong> function was used.</p>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>The objective of this challenge is to build a high performance multi-label classiﬁer for face attributes classiﬁcation using a given dataset. The evaluation set is released one week prior to submission deadline. The higher the prediction accuracy obtained for the private testset, the higher the grades for this challenge.</p>
+<p>There are some <strong>constraints</strong> set for this challenge:</p>
+<ul>
+<li>Model should be trained strictly on the trainset of CelebA.</li>
+<li>Only ImageNet pre-trained models are allowed.</li>
+<li>Ensemble of models is not allowed.</li>
+</ul>
+<p>The <strong>deliverables</strong> of this challenge include:</p>
+<ul>
+<li>A short report in pdf format of not more than five A4 pages.</li>
+<li>Predictions of the test set in a text file.</li>
+<li>Source codes for training and testing the model.</li>
+</ul>
+<h2 id="dataset">Dataset</h2>
+<h3 id="celeba">CelebA</h3>
+<p>The dataset used is from <a href="http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html" target="_blank" rel="noopener">CelebA</a> which contains 200 thousand cropped and aligned faces. The dataset is split into 162,770 images for training, 19,867 images for validation and 19,962 images for testing. There are a total of 40 binary attributes (labels) for each image, with 1 indicating positive prediction, while -1 indicates negative prediction. These attributes are often used to describe a face and some examples include black hair, smiling, mustache. Given an aligned facial image, the classifier must output its prediction for all 40 attributes, making this a multi-label classification problem.</p>
+<h3 id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h3>
+<p>Prior to building the model, EDA was performed to better analyze the given dataset. The frequency distribution of the labels of each dataset split is plotted using matplotlib.</p>
+<p><img src="eda_freq_dist.png" alt="Frequency distribution"></p>
+<p>The plot shows the following observations:</p>
+<ul>
+<li>The splits looked to be stratiﬁed sampled for train and validation sets.</li>
+<li>The test set has some attributes sampled more frequently (e.g. Wearing Lipstick, Wavy Hair and Big Lips).</li>
+<li>The full dataset is <strong>highly imbalanced</strong> with:
+<ul>
+<li>Common attributes like No Beard and Young weighing above 70%.</li>
+<li>Less than 5% of rare attributes such as Mustache and Bald.</li>
+</ul>
+</li>
+</ul>
+<p>Further EDA process also found the following issues:</p>
+<ul>
+<li>Multiple mislabelled images such as:
+<ul>
+<li>Mislabelled males as females with Male set to -1.</li>
+<li>Mislabelled females with No_Beard set to -1.</li>
+</ul>
+</li>
+<li>131 duplicated images with 99 of them having different attribute annotations.</li>
+</ul>
+<p>Other things to note:</p>
+<ul>
+<li>Some attribute labels such as &ldquo;Attractive&rdquo; is rather subjective.</li>
+<li>Train set contains images with annotations, but without faces.</li>
+</ul>
+<p>See my codes on:</p>
+<ul>
+<li>CelebA EDA: <a href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/EDA_Celeba.ipynb"><i class="fab fa-github"></i> Github</a></li>
+<li>CelebA Duplicate Check: <a href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/EDA_Check_Duplicates.ipynb"><i class="fab fa-github"></i> Github</a></li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<h3 id="data-augmentation">Data Augmentation</h3>
+<p>Data augmentation is an important step in many computer vision tasks due to the scarcity of labelled dataset. It helps to “increase” the training set by creating variations of the original images. This expanded dataset alleviates the problem of overﬁtting and allows the model to generalize better.</p>
+<p>For the train set, the images are center cropped to 198 × 158 with 50% probability of horizontal ﬂip and 50% probability for aﬃne transformations (shift, scale, rotate), before RGB normalization and conversion to tensors. For the validation and test set, the images are center cropped to 198 × 158 before RGB normalization and conversion to tensor.</p>
+<p>See my test codes on data augmentations at:
+<a href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/DA_Test%20Transforms.ipynb"><i class="fab fa-github"></i> Github</a></p>
+<h3 id="mixup-training">MixUp Training</h3>
+<p><img src="beta0.2_dist.png" alt="Beta distribution"></p>
+<p>As recommended by He et al. in their Bag of Tricks paper, MixUp training is an alternate form data augmentation technique. In the training loop, pairs of images in a batch are interpolated using a λ value sampled from a beta distribution of α = 0.2 (hyperparameter). The training loss is also computed using a weighted (λ) linear combination of the two losses calculated from the two labels of the mixed images.</p>
+<p>See my test codes on MixUp training at:
+<a href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/DA_MixUp%20Testing.ipynb"><i class="fab fa-github"></i> Github</a></p>
+<h3 id="focal-loss">Focal loss</h3>
+<p>$$\begin{align}
+CE(p_t) &amp;= -log(p_t) \\\
+FL(p_t) &amp;= -\alpha (1-p_t)^{\gamma} log (p_t)
+\end{align}$$</p>
+<p>Due to the class imbalance problem of the dataset stated in EDA, there are more easy positives like No Beard than hard positives like Gray Hair. As a result, the model might tend to be biased towards learning more representations of the data-dominated class. Hence, by using Focal Loss (Equation 2) over Cross Entropy Loss (Equation 1), it can help the network to learn sparse hard examples better. The hyperparameter α controls the weights of positive and negative samples, while γ adjusts the rate at which easy examples are downweighted. After some empirical tuning, α = 0.25 and γ = 3 were set.</p>
+<h3 id="results">Results</h3>
+<p>My best model was trained using pre-trained ImageNet MobileNetV2 as backbone with 40 binary classifiers for identifying the attributes. It attained average accuracy of 91.55%, 92.28% and 91.71% on CelebA&rsquo;s train, validation and test set respectively.</p>
+<p>After the release of the grades, the source of the private test set was announced to be from <a href="http://vis-www.cs.umass.edu/lfw/" target="_blank" rel="noopener">lfwA+</a>. My submission obtained a grade of <strong>25</strong>/<strong>25</strong>.</p>
+<p>See my training notebook at: <a href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-train-v1.5.ipynb"><i class="fab fa-github"></i> Github</a></p>
+<p>See my inference notebook at: <a href="https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-inference-v0.3.ipynb"><i class="fab fa-github"></i> Github</a></p>
+<h2 id="end-notes">End Notes</h2>
+<p>Here&rsquo;s a list of other techniques I&rsquo;ve tried, but did not improve my model:</p>
+<ul>
+<li>Some data augmentations like:
+<ul>
+<li>ColorJitter</li>
+<li>FancyPCA</li>
+<li>Random brightness and contrast</li>
+<li>Adding of random Gaussian noise</li>
+</ul>
+</li>
+<li>Random Erasing did not work well with MixUp training</li>
+<li>Label Smoothing</li>
+<li>Other backbone models like: ResNet50, ResNeXt50</li>
+</ul>
+<h3 id="random-erasing">Random Erasing</h3>
+<p>Random Erasing is like dropout at input level. It cuts out randomly sized areas from random locations of the images with random probability. Much like image impainting, it makes it harder for the classifer to learn by hiding certain semantics from it.</p>
+<h3 id="label-smoothing">Label Smoothing</h3>
+<p>Label smoothing is a regularization technique by Szegedy et al., which perturbs the target variables, to make the model less conﬁdent of its predictions. It does so by performing a weighted linear combination of predicted values by an $\epsilon$ value e.g. 0.1. It usually performs well on imbalanced datasets.</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/computer-vision/">Computer Vision</a>
+  
+  <a class="badge badge-light" href="/tag/deep-learning/">Deep Learning</a>
+  
+  <a class="badge badge-light" href="/tag/cnn/">CNN</a>
+  
+  <a class="badge badge-light" href="/tag/eda/">EDA</a>
+  
+  <a class="badge badge-light" href="/tag/celeba/">CelebA</a>
+  
+  <a class="badge badge-light" href="/tag/mobilenetv2/">MobileNetV2</a>
+  
+  <a class="badge badge-light" href="/tag/mixup-training/">MixUp Training</a>
+  
+  <a class="badge badge-light" href="/tag/focal-loss/">Focal loss</a>
+  
+  <a class="badge badge-light" href="/tag/data-augmentations/">Data Augmentations</a>
+  
+  <a class="badge badge-light" href="/tag/random-erasing/">Random Erasing</a>
+  
+  <a class="badge badge-light" href="/tag/label-smoothing/">Label Smoothing</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://kkaryl.github.io/project/celeba/&amp;text=CelebA%20Facial%20Attribute%20Recognition%20Challenge" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://kkaryl.github.io/project/celeba/&amp;t=CelebA%20Facial%20Attribute%20Recognition%20Challenge" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=CelebA%20Facial%20Attribute%20Recognition%20Challenge&amp;body=https://kkaryl.github.io/project/celeba/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://kkaryl.github.io/project/celeba/&amp;title=CelebA%20Facial%20Attribute%20Recognition%20Challenge" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=CelebA%20Facial%20Attribute%20Recognition%20Challenge%20https://kkaryl.github.io/project/celeba/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://kkaryl.github.io/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu0a384223cd258bb08a9ccb2ed7fe1aa8_1732318_270x270_fill_q75_lanczos_center.jpg" alt="Karyl Ong Jia Hui"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://kkaryl.github.io/">Karyl Ong Jia Hui</a></h5>
+      <h6 class="card-subtitle">MSc. Artificial Intelligence</h6>
+      <p class="card-text">dev. ai.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/kkaryl" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/ongjiahui" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://run.qwiklabs.com/public_profiles/384a8a27-a610-4586-bd08-1f875ea3a904" target="_blank" rel="noopener">
+        <i class="fab fa-google"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/project/div2ksisr/">DIV2K Single Image Super-Resolution Challenge</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+
+    <div class="project-related-pages content-widget-hr">
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+    </div>
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    © 2021
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r,%20python.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <script src="/js/wowchemy.min.8a5944ca666753700aa24ea7126286e3.js"></script>
+
+    
+
+
+</body>
+</html>
