@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Random Erasing | Karyl | Homepage</title>
+    <link>https://kkaryl.github.io/tag/random-erasing/</link>
+      <atom:link href="https://kkaryl.github.io/tag/random-erasing/index.xml" rel="self" type="application/rss+xml" />
+    <description>Random Erasing</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021</copyright><lastBuildDate>Thu, 22 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://kkaryl.github.io/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_512x512_fill_lanczos_center_3.png</url>
+      <title>Random Erasing</title>
+      <link>https://kkaryl.github.io/tag/random-erasing/</link>
+    </image>
+    
+    <item>
+      <title>CelebA Facial Attribute Recognition Challenge</title>
+      <link>https://kkaryl.github.io/project/celeba/</link>
+      <pubDate>Thu, 22 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://kkaryl.github.io/project/celeba/</guid>
+      <description>&lt;h2 id=&#34;foreword&#34;&gt;Foreword&lt;/h2&gt;
+&lt;p&gt;This was a memorable project for me as I had the opportunity to seek and try out numerous advanced machine learning techniques to improve my classification model.&lt;/p&gt;
+&lt;p&gt;My final model was designed to use pre-trained ImageNet &lt;strong&gt;MobileNetV2&lt;/strong&gt; weights with 40 multi-head binary classifiers. To account for the dataset imbalance issue, &lt;strong&gt;MixUp&lt;/strong&gt; training was performed and the &lt;strong&gt;Focal loss&lt;/strong&gt; function was used.&lt;/p&gt;
+&lt;h2 id=&#34;problem-statement&#34;&gt;Problem Statement&lt;/h2&gt;
+&lt;p&gt;The objective of this challenge is to build a high performance multi-label classiﬁer for face attributes classiﬁcation using a given dataset. The evaluation set is released one week prior to submission deadline. The higher the prediction accuracy obtained for the private testset, the higher the grades for this challenge.&lt;/p&gt;
+&lt;p&gt;There are some &lt;strong&gt;constraints&lt;/strong&gt; set for this challenge:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Model should be trained strictly on the trainset of CelebA.&lt;/li&gt;
+&lt;li&gt;Only ImageNet pre-trained models are allowed.&lt;/li&gt;
+&lt;li&gt;Ensemble of models is not allowed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;strong&gt;deliverables&lt;/strong&gt; of this challenge include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A short report in pdf format of not more than five A4 pages.&lt;/li&gt;
+&lt;li&gt;Predictions of the test set in a text file.&lt;/li&gt;
+&lt;li&gt;Source codes for training and testing the model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;dataset&#34;&gt;Dataset&lt;/h2&gt;
+&lt;h3 id=&#34;celeba&#34;&gt;CelebA&lt;/h3&gt;
+&lt;p&gt;The dataset used is from &lt;a href=&#34;http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CelebA&lt;/a&gt; which contains 200 thousand cropped and aligned faces. The dataset is split into 162,770 images for training, 19,867 images for validation and 19,962 images for testing. There are a total of 40 binary attributes (labels) for each image, with 1 indicating positive prediction, while -1 indicates negative prediction. These attributes are often used to describe a face and some examples include black hair, smiling, mustache. Given an aligned facial image, the classifier must output its prediction for all 40 attributes, making this a multi-label classification problem.&lt;/p&gt;
+&lt;h3 id=&#34;exploratory-data-analysis-eda&#34;&gt;Exploratory Data Analysis (EDA)&lt;/h3&gt;
+&lt;p&gt;Prior to building the model, EDA was performed to better analyze the given dataset. The frequency distribution of the labels of each dataset split is plotted using matplotlib.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;eda_freq_dist.png&#34; alt=&#34;Frequency distribution&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The plot shows the following observations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The splits looked to be stratiﬁed sampled for train and validation sets.&lt;/li&gt;
+&lt;li&gt;The test set has some attributes sampled more frequently (e.g. Wearing Lipstick, Wavy Hair and Big Lips).&lt;/li&gt;
+&lt;li&gt;The full dataset is &lt;strong&gt;highly imbalanced&lt;/strong&gt; with:
+&lt;ul&gt;
+&lt;li&gt;Common attributes like No Beard and Young weighing above 70%.&lt;/li&gt;
+&lt;li&gt;Less than 5% of rare attributes such as Mustache and Bald.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Further EDA process also found the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multiple mislabelled images such as:
+&lt;ul&gt;
+&lt;li&gt;Mislabelled males as females with Male set to -1.&lt;/li&gt;
+&lt;li&gt;Mislabelled females with No_Beard set to -1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;131 duplicated images with 99 of them having different attribute annotations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Other things to note:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Some attribute labels such as &amp;ldquo;Attractive&amp;rdquo; is rather subjective.&lt;/li&gt;
+&lt;li&gt;Train set contains images with annotations, but without faces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;See my codes on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CelebA EDA: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/EDA_Celeba.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;CelebA Duplicate Check: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/EDA_Check_Duplicates.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
+&lt;h3 id=&#34;data-augmentation&#34;&gt;Data Augmentation&lt;/h3&gt;
+&lt;p&gt;Data augmentation is an important step in many computer vision tasks due to the scarcity of labelled dataset. It helps to “increase” the training set by creating variations of the original images. This expanded dataset alleviates the problem of overﬁtting and allows the model to generalize better.&lt;/p&gt;
+&lt;p&gt;For the train set, the images are center cropped to 198 × 158 with 50% probability of horizontal ﬂip and 50% probability for aﬃne transformations (shift, scale, rotate), before RGB normalization and conversion to tensors. For the validation and test set, the images are center cropped to 198 × 158 before RGB normalization and conversion to tensor.&lt;/p&gt;
+&lt;p&gt;See my test codes on data augmentations at:
+&lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/DA_Test%20Transforms.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mixup-training&#34;&gt;MixUp Training&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;beta0.2_dist.png&#34; alt=&#34;Beta distribution&#34;&gt;&lt;/p&gt;
+&lt;p&gt;As recommended by He et al. in their Bag of Tricks paper, MixUp training is an alternate form data augmentation technique. In the training loop, pairs of images in a batch are interpolated using a λ value sampled from a beta distribution of α = 0.2 (hyperparameter). The training loss is also computed using a weighted (λ) linear combination of the two losses calculated from the two labels of the mixed images.&lt;/p&gt;
+&lt;p&gt;See my test codes on MixUp training at:
+&lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/DA_MixUp%20Testing.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;focal-loss&#34;&gt;Focal loss&lt;/h3&gt;
+&lt;p&gt;$$\begin{align}
+CE(p_t) &amp;amp;= -log(p_t) \\\
+FL(p_t) &amp;amp;= -\alpha (1-p_t)^{\gamma} log (p_t)
+\end{align}$$&lt;/p&gt;
+&lt;p&gt;Due to the class imbalance problem of the dataset stated in EDA, there are more easy positives like No Beard than hard positives like Gray Hair. As a result, the model might tend to be biased towards learning more representations of the data-dominated class. Hence, by using Focal Loss (Equation 2) over Cross Entropy Loss (Equation 1), it can help the network to learn sparse hard examples better. The hyperparameter α controls the weights of positive and negative samples, while γ adjusts the rate at which easy examples are downweighted. After some empirical tuning, α = 0.25 and γ = 3 were set.&lt;/p&gt;
+&lt;h3 id=&#34;results&#34;&gt;Results&lt;/h3&gt;
+&lt;p&gt;My best model was trained using pre-trained ImageNet MobileNetV2 as backbone with 40 binary classifiers for identifying the attributes. It attained average accuracy of 91.55%, 92.28% and 91.71% on CelebA&amp;rsquo;s train, validation and test set respectively.&lt;/p&gt;
+&lt;p&gt;After the release of the grades, the source of the private test set was announced to be from &lt;a href=&#34;http://vis-www.cs.umass.edu/lfw/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;lfwA+&lt;/a&gt;. My submission obtained a grade of &lt;strong&gt;25&lt;/strong&gt;/&lt;strong&gt;25&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;See my training notebook at: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-train-v1.5.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;See my inference notebook at: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-inference-v0.3.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;end-notes&#34;&gt;End Notes&lt;/h2&gt;
+&lt;p&gt;Here&amp;rsquo;s a list of other techniques I&amp;rsquo;ve tried, but did not improve my model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Some data augmentations like:
+&lt;ul&gt;
+&lt;li&gt;ColorJitter&lt;/li&gt;
+&lt;li&gt;FancyPCA&lt;/li&gt;
+&lt;li&gt;Random brightness and contrast&lt;/li&gt;
+&lt;li&gt;Adding of random Gaussian noise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Random Erasing did not work well with MixUp training&lt;/li&gt;
+&lt;li&gt;Label Smoothing&lt;/li&gt;
+&lt;li&gt;Other backbone models like: ResNet50, ResNeXt50&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;random-erasing&#34;&gt;Random Erasing&lt;/h3&gt;
+&lt;p&gt;Random Erasing is like dropout at input level. It cuts out randomly sized areas from random locations of the images with random probability. Much like image impainting, it makes it harder for the classifer to learn by hiding certain semantics from it.&lt;/p&gt;
+&lt;h3 id=&#34;label-smoothing&#34;&gt;Label Smoothing&lt;/h3&gt;
+&lt;p&gt;Label smoothing is a regularization technique by Szegedy et al., which perturbs the target variables, to make the model less conﬁdent of its predictions. It does so by performing a weighted linear combination of predicted values by an $\epsilon$ value e.g. 0.1. It usually performs well on imbalanced datasets.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

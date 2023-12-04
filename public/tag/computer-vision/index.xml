@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Computer Vision | Karyl | Homepage</title>
+    <link>https://kkaryl.github.io/tag/computer-vision/</link>
+      <atom:link href="https://kkaryl.github.io/tag/computer-vision/index.xml" rel="self" type="application/rss+xml" />
+    <description>Computer Vision</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021</copyright><lastBuildDate>Tue, 17 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://kkaryl.github.io/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_512x512_fill_lanczos_center_3.png</url>
+      <title>Computer Vision</title>
+      <link>https://kkaryl.github.io/tag/computer-vision/</link>
+    </image>
+    
+    <item>
+      <title>DIV2K Single Image Super-Resolution Challenge</title>
+      <link>https://kkaryl.github.io/project/div2ksisr/</link>
+      <pubDate>Tue, 17 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://kkaryl.github.io/project/div2ksisr/</guid>
+      <description>&lt;h2 id=&#34;foreword&#34;&gt;Foreword&lt;/h2&gt;
+&lt;p&gt;Single image super-resolution (SISR) aims to recover a high-resolution (HR) image from its low-resolution(LR) observation. There are two major challenges to project namely the constraint on the number of trainable parameters of the model and the long training times due to the large sizes of the HR images.&lt;/p&gt;
+&lt;p&gt;The former constraint restricts the use of GANs, which is known to produce higher fidelity images as additional discriminator network will definitely exceed the number of trainable parameters. Due to limited computational resources, training a SISR model on a shared GPU resource provided by the institution took too much time per training iteration. This problem was alleviated by converting the raw images into subimages and stored in lmdb format, which allowed much faster disk IO. However, it will still take an entire day to train 1 million iterations. This limits the amount of empirical tuning during the model training and thus forces students to seek out the most efficient and effective methods to try.&lt;/p&gt;
+&lt;p&gt;My final model was designed to use a modified version of SRResNet (MSRResNet) trained on a mini-DIV2K dataset with numerous data augmentations such as MixUp training and L1 loss. It achieved a PSNR score on 28.99 on the validation set after 2M iterations.&lt;/p&gt;
+&lt;h2 id=&#34;problem-statement&#34;&gt;Problem Statement&lt;/h2&gt;
+&lt;p&gt;The objective of this challenge is to build a high performing light-weight neural network model that can increase the resolution of a single image (by four times) using a given dataset.  The evaluation set (80 test images) is released one week prior to submission deadline. The higher the PSNR obtained for the private testset, the higher the grades for this challenge.&lt;/p&gt;
+&lt;p&gt;There are some &lt;strong&gt;constraints&lt;/strong&gt; set for this challenge:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Model should be trained strictly on the provided mini DIV2K training set.&lt;/li&gt;
+&lt;li&gt;Model should contain fewer than 1,821,085 trainable parameters, which is 120% of the trainable parameters in SRResNet.&lt;/li&gt;
+&lt;li&gt;No external data and pretrained models are allowed.&lt;/li&gt;
+&lt;li&gt;Ensemble of models is not allowed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;strong&gt;deliverables&lt;/strong&gt; of this challenge include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A short report in pdf format of not more than five A4 pages.
+&lt;ul&gt;
+&lt;li&gt;PSNR of model on validation sets&lt;/li&gt;
+&lt;li&gt;Number of parameters of final model&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The four times upscaled images of the 80 test LR images.&lt;/li&gt;
+&lt;li&gt;Model checkpoint (weights) of submitted model.&lt;/li&gt;
+&lt;li&gt;Source codes for training and testing the model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;dataset&#34;&gt;Dataset&lt;/h2&gt;
+&lt;h3 id=&#34;mini-div2k&#34;&gt;Mini DIV2K&lt;/h3&gt;
+&lt;p&gt;The mini dataset provided was extracted from the larger &lt;a href=&#34;https://data.vision.ee.ethz.ch/cvl/DIV2K/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DIV2K&lt;/a&gt; dataset, which originally contains 800 HR and corresponding low resolution images for training and 100 HR and LR images for validation. In this project, the mini DIV2K dataset contains 500 HR and LRx4 images for training and 80 pairs for validation and will be hereafter denoted as DIV2K for simplicity.&lt;/p&gt;
+&lt;h3 id=&#34;dataset-preparation&#34;&gt;Dataset Preparation&lt;/h3&gt;
+&lt;p&gt;As the DIV2K training dataset contains large 2K images, it takes a long time to load the HR images into memory for training. In order to improve the speed of disk IO during training, the 500 HR images are first cropped into 20,424 of 480x480 subimages before converting into a lmdb dataset (HRsub.lmdb) format. Similarly, the 500 corresponding LR images are also cropped into 20,424 of 120x120 subimages before converting to a lmdb dataset (LRx4sub.lmdb).&lt;/p&gt;
+&lt;p&gt;One thing to note is the disadvantage for converting the images into lmdb format. The two lmdb files required close to 70 GB of disk space as compared to the original 3GB of all the image files. However, it is a necessary tradeoff to train using the lmdb files as the training speed was increased at least 2 folds.&lt;/p&gt;
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
+&lt;h3 id=&#34;data-augmentation&#34;&gt;Data Augmentation&lt;/h3&gt;
+&lt;p&gt;Data augmentation is an important step in many computer vision tasks due to the scarcity of labelled dataset. It helps to “increase” the training set by creating variations of the original images. This expanded dataset alleviates the problem of overﬁtting and allows the model to generalize better.&lt;/p&gt;
+&lt;p&gt;Standard geometric manipulation techniques such as paired random crop, random horizontal and vertical flips and random rotations, provided by the baseline BasicSR are applied to the model training.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;SISR_data_aug.png&#34; alt=&#34;Non-standard Data Augmentations&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Inspired by Yoo et al. findings on effective augmentations for Image Super Resolution, augmentations such as RGB permutations and Blending, which performs no structural changes to the images were applied. RGB permutation is the random shuffling of the color channels of the HR and LR images (same permutations), while Blending adds a random constant value to the images. As experimented, these two augmentation improves the PSNR by 0.03 on the validation set. Futhermore, MixUp training was also performed. MixUp is a data augmentation technique that blends two images to generate an unseen training sample. As such pairs of LR and HR images are mixed together using a weighted linear interpolation with a λ value sampled from a beta distribution of α = 0.2 (hyperparameter).&lt;/p&gt;
+&lt;h3 id=&#34;l1-loss&#34;&gt;L1 loss&lt;/h3&gt;
+&lt;p&gt;$$\begin{align}
+L1 &amp;amp;= \frac{1}{N} \sum_{i=1}^N |I_{HR}(i) - I_{SR}(i)|
+\end{align}$$&lt;/p&gt;
+&lt;p&gt;As the PSNR metric is highly correlated with the pixel-wise difference, and minimizing the pixel loss directly maximizes the PSNR metric value. It was observed that L1 Loss performs better than MSE Loss in terms of PSNR on validation set, thus it was used for the training of the final model.&lt;/p&gt;
+&lt;h3 id=&#34;evaluation-metric&#34;&gt;Evaluation Metric&lt;/h3&gt;
+&lt;p&gt;$$\begin{align}
+MSE &amp;amp;= \frac{1}{N} \sum_{i=1}^N (I_{HR}(i) - I_{SR}(i))^2 \\\
+PSNR &amp;amp;= 10 \cdot \log_{10}(\frac{L^2}{MSE})
+\end{align}$$&lt;/p&gt;
+&lt;p&gt;For this challenge, the evaluation metric used is the Peak Signal-to-Noise Ratio (PSNR) score. PSNR is inversely proportional to the logarithm of the Mean Squared Error (MSE) between the ground truth image and the generated image.&lt;/p&gt;
+&lt;h3 id=&#34;results&#34;&gt;Results&lt;/h3&gt;
+&lt;p&gt;My final model uses MSRResNet (Modified SRResNet) with 20 residual blocks has a total of &lt;strong&gt;1,812,995&lt;/strong&gt; parameters, trained using standard geometric augmentations, RGB permutation, Blend and MixUp augmentations obtained a PSNR score of &lt;strong&gt;28.99&lt;/strong&gt; in Mini-DIV2k test set after 2 million training iterations. This modified version of SRResNet uses residual blocks without Batch Normalization, which is an enhancement suggested in the EDSR paper. The MSRResNet was configured to use 20 residual blocks instead of the original 16 blocks to increase its depth and it is strictly within the trainable parameters of 1,821,085.&lt;/p&gt;
+&lt;p&gt;Note that the final grades for this challenge was not released as it was a final project, but it can be assumed that my submission was one of the top-performing candidates based on my final results for the course.&lt;/p&gt;
+&lt;!-- See my training notebook at: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-train-v1.5.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;
+
+See my inference notebook at: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-inference-v0.3.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt; --&gt;
+&lt;h2 id=&#34;end-notes&#34;&gt;End Notes&lt;/h2&gt;
+&lt;p&gt;Here&amp;rsquo;s a list of other techniques I&amp;rsquo;ve tried, but did not improve my model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Some data augmentations like:
+&lt;ul&gt;
+&lt;li&gt;CutBlur&lt;/li&gt;
+&lt;li&gt;Random brightness and contrast&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Other model architectures such as:
+&lt;ul&gt;
+&lt;li&gt;EDSR&lt;/li&gt;
+&lt;li&gt;CARN&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;carn-architecture&#34;&gt;CARN Architecture&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;CARN.png&#34; alt=&#34;CARN Architecture&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The CARN model is based on ResNet architecture like the baseline, SRResNet. The main difference between CARN and ResNet is the presence of local and global cascading modules.  In the CARN model, each residual block is changed to a “local” cascading block and the blue arrows indicate “global” cascading connections. The outputs of intermediary layers are cascaded into the higher layers, and finally converge on a single 1×1 convolution layer.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>CelebA Facial Attribute Recognition Challenge</title>
+      <link>https://kkaryl.github.io/project/celeba/</link>
+      <pubDate>Thu, 22 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://kkaryl.github.io/project/celeba/</guid>
+      <description>&lt;h2 id=&#34;foreword&#34;&gt;Foreword&lt;/h2&gt;
+&lt;p&gt;This was a memorable project for me as I had the opportunity to seek and try out numerous advanced machine learning techniques to improve my classification model.&lt;/p&gt;
+&lt;p&gt;My final model was designed to use pre-trained ImageNet &lt;strong&gt;MobileNetV2&lt;/strong&gt; weights with 40 multi-head binary classifiers. To account for the dataset imbalance issue, &lt;strong&gt;MixUp&lt;/strong&gt; training was performed and the &lt;strong&gt;Focal loss&lt;/strong&gt; function was used.&lt;/p&gt;
+&lt;h2 id=&#34;problem-statement&#34;&gt;Problem Statement&lt;/h2&gt;
+&lt;p&gt;The objective of this challenge is to build a high performance multi-label classiﬁer for face attributes classiﬁcation using a given dataset. The evaluation set is released one week prior to submission deadline. The higher the prediction accuracy obtained for the private testset, the higher the grades for this challenge.&lt;/p&gt;
+&lt;p&gt;There are some &lt;strong&gt;constraints&lt;/strong&gt; set for this challenge:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Model should be trained strictly on the trainset of CelebA.&lt;/li&gt;
+&lt;li&gt;Only ImageNet pre-trained models are allowed.&lt;/li&gt;
+&lt;li&gt;Ensemble of models is not allowed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;strong&gt;deliverables&lt;/strong&gt; of this challenge include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A short report in pdf format of not more than five A4 pages.&lt;/li&gt;
+&lt;li&gt;Predictions of the test set in a text file.&lt;/li&gt;
+&lt;li&gt;Source codes for training and testing the model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;dataset&#34;&gt;Dataset&lt;/h2&gt;
+&lt;h3 id=&#34;celeba&#34;&gt;CelebA&lt;/h3&gt;
+&lt;p&gt;The dataset used is from &lt;a href=&#34;http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CelebA&lt;/a&gt; which contains 200 thousand cropped and aligned faces. The dataset is split into 162,770 images for training, 19,867 images for validation and 19,962 images for testing. There are a total of 40 binary attributes (labels) for each image, with 1 indicating positive prediction, while -1 indicates negative prediction. These attributes are often used to describe a face and some examples include black hair, smiling, mustache. Given an aligned facial image, the classifier must output its prediction for all 40 attributes, making this a multi-label classification problem.&lt;/p&gt;
+&lt;h3 id=&#34;exploratory-data-analysis-eda&#34;&gt;Exploratory Data Analysis (EDA)&lt;/h3&gt;
+&lt;p&gt;Prior to building the model, EDA was performed to better analyze the given dataset. The frequency distribution of the labels of each dataset split is plotted using matplotlib.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;eda_freq_dist.png&#34; alt=&#34;Frequency distribution&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The plot shows the following observations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The splits looked to be stratiﬁed sampled for train and validation sets.&lt;/li&gt;
+&lt;li&gt;The test set has some attributes sampled more frequently (e.g. Wearing Lipstick, Wavy Hair and Big Lips).&lt;/li&gt;
+&lt;li&gt;The full dataset is &lt;strong&gt;highly imbalanced&lt;/strong&gt; with:
+&lt;ul&gt;
+&lt;li&gt;Common attributes like No Beard and Young weighing above 70%.&lt;/li&gt;
+&lt;li&gt;Less than 5% of rare attributes such as Mustache and Bald.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Further EDA process also found the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multiple mislabelled images such as:
+&lt;ul&gt;
+&lt;li&gt;Mislabelled males as females with Male set to -1.&lt;/li&gt;
+&lt;li&gt;Mislabelled females with No_Beard set to -1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;131 duplicated images with 99 of them having different attribute annotations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Other things to note:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Some attribute labels such as &amp;ldquo;Attractive&amp;rdquo; is rather subjective.&lt;/li&gt;
+&lt;li&gt;Train set contains images with annotations, but without faces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;See my codes on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CelebA EDA: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/EDA_Celeba.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;CelebA Duplicate Check: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/EDA_Check_Duplicates.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
+&lt;h3 id=&#34;data-augmentation&#34;&gt;Data Augmentation&lt;/h3&gt;
+&lt;p&gt;Data augmentation is an important step in many computer vision tasks due to the scarcity of labelled dataset. It helps to “increase” the training set by creating variations of the original images. This expanded dataset alleviates the problem of overﬁtting and allows the model to generalize better.&lt;/p&gt;
+&lt;p&gt;For the train set, the images are center cropped to 198 × 158 with 50% probability of horizontal ﬂip and 50% probability for aﬃne transformations (shift, scale, rotate), before RGB normalization and conversion to tensors. For the validation and test set, the images are center cropped to 198 × 158 before RGB normalization and conversion to tensor.&lt;/p&gt;
+&lt;p&gt;See my test codes on data augmentations at:
+&lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/DA_Test%20Transforms.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mixup-training&#34;&gt;MixUp Training&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;beta0.2_dist.png&#34; alt=&#34;Beta distribution&#34;&gt;&lt;/p&gt;
+&lt;p&gt;As recommended by He et al. in their Bag of Tricks paper, MixUp training is an alternate form data augmentation technique. In the training loop, pairs of images in a batch are interpolated using a λ value sampled from a beta distribution of α = 0.2 (hyperparameter). The training loss is also computed using a weighted (λ) linear combination of the two losses calculated from the two labels of the mixed images.&lt;/p&gt;
+&lt;p&gt;See my test codes on MixUp training at:
+&lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/DA_MixUp%20Testing.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;focal-loss&#34;&gt;Focal loss&lt;/h3&gt;
+&lt;p&gt;$$\begin{align}
+CE(p_t) &amp;amp;= -log(p_t) \\\
+FL(p_t) &amp;amp;= -\alpha (1-p_t)^{\gamma} log (p_t)
+\end{align}$$&lt;/p&gt;
+&lt;p&gt;Due to the class imbalance problem of the dataset stated in EDA, there are more easy positives like No Beard than hard positives like Gray Hair. As a result, the model might tend to be biased towards learning more representations of the data-dominated class. Hence, by using Focal Loss (Equation 2) over Cross Entropy Loss (Equation 1), it can help the network to learn sparse hard examples better. The hyperparameter α controls the weights of positive and negative samples, while γ adjusts the rate at which easy examples are downweighted. After some empirical tuning, α = 0.25 and γ = 3 were set.&lt;/p&gt;
+&lt;h3 id=&#34;results&#34;&gt;Results&lt;/h3&gt;
+&lt;p&gt;My best model was trained using pre-trained ImageNet MobileNetV2 as backbone with 40 binary classifiers for identifying the attributes. It attained average accuracy of 91.55%, 92.28% and 91.71% on CelebA&amp;rsquo;s train, validation and test set respectively.&lt;/p&gt;
+&lt;p&gt;After the release of the grades, the source of the private test set was announced to be from &lt;a href=&#34;http://vis-www.cs.umass.edu/lfw/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;lfwA+&lt;/a&gt;. My submission obtained a grade of &lt;strong&gt;25&lt;/strong&gt;/&lt;strong&gt;25&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;See my training notebook at: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-train-v1.5.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;See my inference notebook at: &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/ai6126-p1-inference-v0.3.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;end-notes&#34;&gt;End Notes&lt;/h2&gt;
+&lt;p&gt;Here&amp;rsquo;s a list of other techniques I&amp;rsquo;ve tried, but did not improve my model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Some data augmentations like:
+&lt;ul&gt;
+&lt;li&gt;ColorJitter&lt;/li&gt;
+&lt;li&gt;FancyPCA&lt;/li&gt;
+&lt;li&gt;Random brightness and contrast&lt;/li&gt;
+&lt;li&gt;Adding of random Gaussian noise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Random Erasing did not work well with MixUp training&lt;/li&gt;
+&lt;li&gt;Label Smoothing&lt;/li&gt;
+&lt;li&gt;Other backbone models like: ResNet50, ResNeXt50&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;random-erasing&#34;&gt;Random Erasing&lt;/h3&gt;
+&lt;p&gt;Random Erasing is like dropout at input level. It cuts out randomly sized areas from random locations of the images with random probability. Much like image impainting, it makes it harder for the classifer to learn by hiding certain semantics from it.&lt;/p&gt;
+&lt;h3 id=&#34;label-smoothing&#34;&gt;Label Smoothing&lt;/h3&gt;
+&lt;p&gt;Label smoothing is a regularization technique by Szegedy et al., which perturbs the target variables, to make the model less conﬁdent of its predictions. It does so by performing a weighted linear combination of predicted values by an $\epsilon$ value e.g. 0.1. It usually performs well on imbalanced datasets.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
