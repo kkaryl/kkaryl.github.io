@@ -7,7 +7,7 @@
     <description>Focal loss</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021</copyright><lastBuildDate>Thu, 22 Oct 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://kkaryl.github.io/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_512x512_fill_lanczos_center_2.png</url>
+      <url>https://kkaryl.github.io/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_512x512_fill_lanczos_center_3.png</url>
       <title>Focal loss</title>
       <link>https://kkaryl.github.io/tag/focal-loss/</link>
     </image>
@@ -84,7 +84,7 @@
 &lt;a href=&#34;https://github.com/kkaryl/AI6126-Advanced_Computer_Vision/blob/master/project_1/src/DA_MixUp%20Testing.ipynb&#34;&gt;&lt;i class=&#34;fab fa-github&#34;&gt;&lt;/i&gt; Github&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;focal-loss&#34;&gt;Focal loss&lt;/h3&gt;
 &lt;p&gt;$$\begin{align}
-CE(p_t) &amp;amp;= -log(p_t) \\\&lt;br&gt;
+CE(p_t) &amp;amp;= -log(p_t) \\\
 FL(p_t) &amp;amp;= -\alpha (1-p_t)^{\gamma} log (p_t)
 \end{align}$$&lt;/p&gt;
 &lt;p&gt;Due to the class imbalance problem of the dataset stated in EDA, there are more easy positives like No Beard than hard positives like Gray Hair. As a result, the model might tend to be biased towards learning more representations of the data-dominated class. Hence, by using Focal Loss (Equation 2) over Cross Entropy Loss (Equation 1), it can help the network to learn sparse hard examples better. The hyperparameter α controls the weights of positive and negative samples, while γ adjusts the rate at which easy examples are downweighted. After some empirical tuning, α = 0.25 and γ = 3 were set.&lt;/p&gt;

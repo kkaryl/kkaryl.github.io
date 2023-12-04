@@ -7,7 +7,7 @@
     <description>DIV2K</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021</copyright><lastBuildDate>Tue, 17 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://kkaryl.github.io/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_512x512_fill_lanczos_center_2.png</url>
+      <url>https://kkaryl.github.io/images/icon_hu63be5c3ffb57da62f326d16fcb778481_27207_512x512_fill_lanczos_center_3.png</url>
       <title>DIV2K</title>
       <link>https://kkaryl.github.io/tag/div2k/</link>
     </image>
@@ -61,7 +61,7 @@ L1 &amp;amp;= \frac{1}{N} \sum_{i=1}^N |I_{HR}(i) - I_{SR}(i)|
 &lt;p&gt;As the PSNR metric is highly correlated with the pixel-wise difference, and minimizing the pixel loss directly maximizes the PSNR metric value. It was observed that L1 Loss performs better than MSE Loss in terms of PSNR on validation set, thus it was used for the training of the final model.&lt;/p&gt;
 &lt;h3 id=&#34;evaluation-metric&#34;&gt;Evaluation Metric&lt;/h3&gt;
 &lt;p&gt;$$\begin{align}
-MSE &amp;amp;= \frac{1}{N} \sum_{i=1}^N (I_{HR}(i) - I_{SR}(i))^2 \\\&lt;br&gt;
+MSE &amp;amp;= \frac{1}{N} \sum_{i=1}^N (I_{HR}(i) - I_{SR}(i))^2 \\\
 PSNR &amp;amp;= 10 \cdot \log_{10}(\frac{L^2}{MSE})
 \end{align}$$&lt;/p&gt;
 &lt;p&gt;For this challenge, the evaluation metric used is the Peak Signal-to-Noise Ratio (PSNR) score. PSNR is inversely proportional to the logarithm of the Mean Squared Error (MSE) between the ground truth image and the generated image.&lt;/p&gt;
