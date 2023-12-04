@@ -22,6 +22,22 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
+  - title: Lead Machine Learning Engineer
+    company: Grab
+    company_url: ''
+    location: Singapore
+    date_start: '2023-04-01'
+    date_end: ''
+    description:
+
+  - title: Senior Machine Learning Engineer
+    company: Grab
+    company_url: ''
+    location: Singapore
+    date_start: '2021-04-05'
+    date_end: '2023-03-31'
+    description:
+      
   - title: Senior Engineer (Application Lead)
     company: PCS Security Pte Ltd
     company_url: ''

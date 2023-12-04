@@ -16,7 +16,11 @@ subtitle:
 # - Add/remove as many `feature` blocks below as you like.
 # - For available icons, see: https://wowchemy.com/docs/page-builder/#icons
 feature:
-- description: Current
+- description: Language
+  icon: google
+  icon_pack: fab
+  name: Golang
+- description: Language
   icon: python
   icon_pack: fab
   name: Python
