@@ -1,5 +1,8 @@
 run:
-	npm run dev
+	pnpm run dev
 
 build:
-	npm run build
+	pnpm run build
+
+lock:
+	pnpm install --lockfile-only
