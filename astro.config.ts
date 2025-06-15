@@ -5,6 +5,8 @@ import expressiveCode from 'astro-expressive-code';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import spectre from './package/src';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 import node from '@astrojs/node';
 import { spectreDark } from './src/ec-theme';
@@ -29,7 +31,10 @@ const config = defineConfig({
     expressiveCode({
       themes: ['dracula'], //spectreDark
     }),
-    mdx(),
+    mdx({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
+    }),
     sitemap(),
     spectre({
       name: 'Karyl Ong',
