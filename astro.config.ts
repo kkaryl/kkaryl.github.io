@@ -7,6 +7,12 @@ import sitemap from '@astrojs/sitemap';
 import spectre from './package/src';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeExpressiveCode from 'rehype-expressive-code'
+
+/** @type {import('rehype-expressive-code').RehypeExpressiveCodeOptions} */
+const rehypeExpressiveCodeOptions = {
+  themes: ['dracula'], 
+}
 
 import node from '@astrojs/node';
 import { spectreDark } from './src/ec-theme';
@@ -33,7 +39,10 @@ const config = defineConfig({
     }),
     mdx({
       remarkPlugins: [remarkMath],
-      rehypePlugins: [rehypeKatex],
+      rehypePlugins: [
+        rehypeKatex,
+        [rehypeExpressiveCode, rehypeExpressiveCodeOptions],
+      ],
     }),
     sitemap(),
     spectre({

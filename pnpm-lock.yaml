@@ -38,6 +38,9 @@ importers:
       katex:
         specifier: ^0.16.22
         version: 0.16.22
+      rehype-expressive-code:
+        specifier: ^0.41.2
+        version: 0.41.2
       rehype-katex:
         specifier: ^7.0.1
         version: 7.0.1
@@ -333,14 +336,26 @@ packages:
   '@expressive-code/core@0.38.3':
     resolution: {integrity: sha512-s0/OtdRpBONwcn23O8nVwDNQqpBGKscysejkeBkwlIeHRLZWgiTVrusT5Idrdz1d8cW5wRk9iGsAIQmwDPXgJg==}
 
+  '@expressive-code/core@0.41.2':
+    resolution: {integrity: sha512-AJW5Tp9czbLqKMzwudL9Rv4js9afXBxkSGLmCNPq1iRgAYcx9NkTPJiSNCesjKRWoVC328AdSu6fqrD22zDgDg==}
+
   '@expressive-code/plugin-frames@0.38.3':
     resolution: {integrity: sha512-qL2oC6FplmHNQfZ8ZkTR64/wKo9x0c8uP2WDftR/ydwN/yhe1ed7ZWYb8r3dezxsls+tDokCnN4zYR594jbpvg==}
+
+  '@expressive-code/plugin-frames@0.41.2':
+    resolution: {integrity: sha512-pfy0hkJI4nbaONjmksFDcuHmIuyPTFmi1JpABe4q2ajskiJtfBf+WDAL2pg595R9JNoPrrH5+aT9lbkx2noicw==}
 
   '@expressive-code/plugin-shiki@0.38.3':
     resolution: {integrity: sha512-kqHnglZeesqG3UKrb6e9Fq5W36AZ05Y9tCREmSN2lw8LVTqENIeCIkLDdWtQ5VoHlKqwUEQFTVlRehdwoY7Gmw==}
 
+  '@expressive-code/plugin-shiki@0.41.2':
+    resolution: {integrity: sha512-xD4zwqAkDccXqye+235BH5bN038jYiSMLfUrCOmMlzxPDGWdxJDk5z4uUB/aLfivEF2tXyO2zyaarL3Oqht0fQ==}
+
   '@expressive-code/plugin-text-markers@0.38.3':
     resolution: {integrity: sha512-dPK3+BVGTbTmGQGU3Fkj3jZ3OltWUAlxetMHI6limUGCWBCucZiwoZeFM/WmqQa71GyKRzhBT+iEov6kkz2xVA==}
+
+  '@expressive-code/plugin-text-markers@0.41.2':
+    resolution: {integrity: sha512-JFWBz2qYxxJOJkkWf96LpeolbnOqJY95TvwYc0hXIHf9oSWV0h0SY268w/5N3EtQaD9KktzDE+VIVwb9jdb3nw==}
 
   '@iconify-json/lucide@1.2.20':
     resolution: {integrity: sha512-m/8rqukvQfsE+MYTwNXCxP/K2iucTCGSQfS0XZhYpkZKGRdiEOdAAnd8Vv+E78xKK94Jza2eTc5ihxbw6+i7EQ==}
@@ -1011,6 +1026,9 @@ packages:
   expressive-code@0.38.3:
     resolution: {integrity: sha512-COM04AiUotHCKJgWdn7NtW2lqu8OW8owAidMpkXt1qxrZ9Q2iC7+tok/1qIn2ocGnczvr9paIySgGnEwFeEQ8Q==}
 
+  expressive-code@0.41.2:
+    resolution: {integrity: sha512-aLZiZaqorRtNExtGpUjK9zFH9aTpWeoTXMyLo4b4IcuXfPqtLPPxhRm/QlPb8QqIcMMXnSiGRHSFpQfX0m7HJw==}
+
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
@@ -1586,6 +1604,9 @@ packages:
 
   rehype-expressive-code@0.38.3:
     resolution: {integrity: sha512-RYSSDkMBikoTbycZPkcWp6ELneANT4eTpND1DSRJ6nI2eVFUwTBDCvE2vO6jOOTaavwnPiydi4i/87NRyjpdOA==}
+
+  rehype-expressive-code@0.41.2:
+    resolution: {integrity: sha512-vHYfWO9WxAw6kHHctddOt+P4266BtyT1mrOIuxJD+1ELuvuJAa5uBIhYt0OVMyOhlvf57hzWOXJkHnMhpaHyxw==}
 
   rehype-katex@7.0.1:
     resolution: {integrity: sha512-OiM2wrZ/wuhKkigASodFoo8wimG3H12LWQaH8qSPVJn9apWKFSH3YOCtbKpBorTVw/eI7cuT21XBbvwEswbIOA==}
@@ -2259,18 +2280,43 @@ snapshots:
       unist-util-visit: 5.0.0
       unist-util-visit-parents: 6.0.1
 
+  '@expressive-code/core@0.41.2':
+    dependencies:
+      '@ctrl/tinycolor': 4.1.0
+      hast-util-select: 6.0.3
+      hast-util-to-html: 9.0.5
+      hast-util-to-text: 4.0.2
+      hastscript: 9.0.0
+      postcss: 8.5.3
+      postcss-nested: 6.2.0(postcss@8.5.3)
+      unist-util-visit: 5.0.0
+      unist-util-visit-parents: 6.0.1
+
   '@expressive-code/plugin-frames@0.38.3':
     dependencies:
       '@expressive-code/core': 0.38.3
+
+  '@expressive-code/plugin-frames@0.41.2':
+    dependencies:
+      '@expressive-code/core': 0.41.2
 
   '@expressive-code/plugin-shiki@0.38.3':
     dependencies:
       '@expressive-code/core': 0.38.3
       shiki: 1.26.1
 
+  '@expressive-code/plugin-shiki@0.41.2':
+    dependencies:
+      '@expressive-code/core': 0.41.2
+      shiki: 3.4.2
+
   '@expressive-code/plugin-text-markers@0.38.3':
     dependencies:
       '@expressive-code/core': 0.38.3
+
+  '@expressive-code/plugin-text-markers@0.41.2':
+    dependencies:
+      '@expressive-code/core': 0.41.2
 
   '@iconify-json/lucide@1.2.20':
     dependencies:
@@ -2989,6 +3035,13 @@ snapshots:
       '@expressive-code/plugin-frames': 0.38.3
       '@expressive-code/plugin-shiki': 0.38.3
       '@expressive-code/plugin-text-markers': 0.38.3
+
+  expressive-code@0.41.2:
+    dependencies:
+      '@expressive-code/core': 0.41.2
+      '@expressive-code/plugin-frames': 0.41.2
+      '@expressive-code/plugin-shiki': 0.41.2
+      '@expressive-code/plugin-text-markers': 0.41.2
 
   extend@3.0.2: {}
 
@@ -3904,6 +3957,11 @@ snapshots:
       postcss: 8.4.49
       postcss-selector-parser: 6.1.2
 
+  postcss-nested@6.2.0(postcss@8.5.3):
+    dependencies:
+      postcss: 8.5.3
+      postcss-selector-parser: 6.1.2
+
   postcss-selector-parser@6.1.2:
     dependencies:
       cssesc: 3.0.0
@@ -3990,6 +4048,10 @@ snapshots:
   rehype-expressive-code@0.38.3:
     dependencies:
       expressive-code: 0.38.3
+
+  rehype-expressive-code@0.41.2:
+    dependencies:
+      expressive-code: 0.41.2
 
   rehype-katex@7.0.1:
     dependencies:
