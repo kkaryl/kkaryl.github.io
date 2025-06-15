@@ -1,0 +1,70 @@
+---
+title: "Building Semantica: A Vibe-Coded CLI for AI-Generated Conventional Commits"
+description: "How I built a Python CLI tool in under 5 minutes using vibe coding to generate conventional commit messages with OpenAI"
+image: "../assets/vibe.png"
+createdAt: 6-15-2025
+draft: false
+tags:
+  - build-to-learn
+  - vibe-coding
+  - generative-ai
+---
+
+## Introduction
+
+## The Why: My Love Affair with Conventional Commits
+
+For years now, I've been rigorously following the [conventional commit](https://www.conventionalcommits.org/) standard for writing commit messages, and I've been that person on the team constantly advocating for this engineering practice. Why? Because I genuinely believe in the context that meaningful conventional commits provide to code reviewers.
+
+There's something beautiful about opening a pull request and immediately understanding the scope and impact of changes just from scanning the commit history:
+
+```shell
+feat(auth): add OAuth2 integration with Google
+fix(api): resolve race condition in user session handling
+docs(readme): update installation instructions
+```
+
+Beyond the immediate readability benefits, I've also set up numerous code repositories at work with semantic-release CI pipelines. This automation has been a game-changer for release management and changelog generation—turning what used to be manual, error-prone processes into seamless, automated workflows.
+
+But here's the thing: writing good conventional commits consistently can be mentally taxing, especially when you're in flow state and just want to commit your changes quickly.
+
+## The Birth of Semantica
+
+As part of my pursuit towards building to learn, I decided to vibe code a mini CLI tool named Semantica. 
+The concept is simple: analyze your `git add`ed changes and use OpenAI to generate a one-liner commit message that follows conventional commit standards.
+
+## a Vibe Coding Experiment
+
+Semantica project wasn't just about solving a personal pain point, it was also born out of my desire to explore Vibe Coding with a language (Python) that I'm familiar with as well.
+
+### The Pros: Lightning Fast Scaffolding
+The results were honestly impressive. I had a working version of Semantica up and running in less than 5 minutes. 
+The speed at which I could structure the code and get something functional was genuinely exciting. 
+There's something liberating about just... building, without overthinking every architectural decision.
+
+The core functionality came together almost effortlessly:
+
+- Parse git diff for staged changes
+- Send the diff to OpenAI with a well-crafted prompt
+- Format the response as a conventional commit
+- Done! 
+
+### The Hmms
+
+Of course, vibe coding isn't without its trade-offs. After getting the initial version working, I spent additional time trying to make the model configurable to use GPT-4o-mini for faster performance. 
+This is where the "vibe" started to meet practical considerations, especially since I do already know where exactly to change that line of code.
+
+The experience was genuinely fun, but I'll be honest—if I were to release this code publicly, I'd probably spend some time refactoring it to match my usual coding style. I'm not quite ready to go full vibe-coding for production code just yet.
+
+## Conclusion
+
+This project reinforced a few important insights:
+1. Vibe coding is powerful for prototyping: When you want to validate an idea quickly, letting intuition drive can be incredibly effective.
+2. AI tooling works best when narrowly focused: Rather than trying to build a general-purpose commit helper, focusing specifically on conventional commits made the AI output much more reliable.
+3. Production-ready requires more than vibes: While vibe coding got me to a working prototype fast, shipping something reliable still requires thoughtful architecture and testing.
+
+---
+
+This post is part of my Build to Learn series, where I explore new technologies and development approaches through hands-on projects. 
+You can follow along with my experiments and learnings as I continue to push the boundaries of what's possible with modern development tools.
+

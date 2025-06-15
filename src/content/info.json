@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "icon": {
+      "type": "lucide",
+      "name": "briefcase-business"
+    },
+    "text": "ML Tech Lead @ Grab"
+  },
+  {
+    "id": 2,
+    "icon": {
+      "type": "lucide",
+      "name": "graduation-cap"
+    },
+    "type": "lucide",
+    "text": "MSc in AI"
+  },
+  {
+    "id": 3,
+    "icon": {
+      "type": "lucide",
+      "name": "scan-face"
+    },
+    "type": "lucide",
+    "text": "Never stop learning"
+  }
+]
