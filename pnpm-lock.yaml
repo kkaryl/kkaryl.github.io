@@ -35,6 +35,9 @@ importers:
       astro-expressive-code:
         specifier: ^0.38.3
         version: 0.38.3(astro@5.8.0(rollup@4.35.0)(typescript@5.7.2))
+      katex:
+        specifier: ^0.16.22
+        version: 0.16.22
       rehype-katex:
         specifier: ^7.0.1
         version: 7.0.1
